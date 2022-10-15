@@ -26,7 +26,7 @@ pub fn lex_file(str: String) -> Vec<Token> {
 
 	let mut tokens: Vec<Token> = Vec::new();
 	for (i, line) in lines.iter().enumerate() {
-		gen_tokens(line, i as u32, &mut tokens);
+		gen_tokens(line, (i as u32) + 1, &mut tokens);
 	}
 	
 	tokens
@@ -38,25 +38,28 @@ fn split_newline(str: String) -> Vec<String> {
 }
 
 
-fn gen_tokens(line: &String, line_num: u32, tokens: &mut Vec<Token>) {
-	let ln = line_num + 1;
-	
+fn gen_tokens(line: &String, ln: u32, tokens: &mut Vec<Token>) {
 	let mut num_str: String = String::new();
 	let mut reading_num: bool = false;
 	let mut dot_count: u32 = 0; 
+	let mut start_col_num = 0;
 
 	for (i, c) in line.to_owned().chars().enumerate() {
 		if c.is_whitespace() {
 			continue;
 		}
+		if c.is_digit(10) && !reading_num {
+			reading_num = true;
+			start_col_num = i;
+		}
 		if c.is_digit(10) {
 			num_str += &String::from(c.to_string());
-			reading_num = true;
 			continue;
 		}
 		if reading_num {
 			if c == '.' {
 				dot_count += 1;
+				start_col_num = i;
 				assert!(dot_count <= 1, "line {ln}: col {i}: Error: Too many punctuations in float, ammount {dot_count}");
 				continue;
 			}
@@ -66,7 +69,7 @@ fn gen_tokens(line: &String, line_num: u32, tokens: &mut Vec<Token>) {
 			}
 			tokens.append(&mut vec![Token {
 				line: ln,
-				col: i as u32,
+				col: start_col_num as u32,
 				str: num_str,
 				tt,
 			}]);
@@ -93,5 +96,19 @@ fn gen_tokens(line: &String, line_num: u32, tokens: &mut Vec<Token>) {
 			str: c.to_string(),
 			tt,
 		}]);
+	}
+
+	if reading_num {
+		let mut tt = TokenType::INT;
+		if dot_count > 0 {
+			tt = TokenType::FLOAT;
+		}
+		tokens.append(&mut vec![Token {
+			line: ln,
+			col: start_col_num as u32,
+			str: num_str,
+			tt,
+		}]);
+
 	}
 }
