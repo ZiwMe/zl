@@ -76,6 +76,7 @@ fn gen_tokens(line: &String, ln: u32, tokens: &mut Vec<Token>) {
 			if c == '.' {
 				// Increase the dot count 
 				dot_count += 1;
+				num_str += &".".to_string();
 				// panick if there are too many dot's in a float
 				assert!(dot_count <= 1, "line {ln}: col {i}: Error: Too many punctuations in float, ammount {dot_count}");
 				continue;
@@ -109,12 +110,12 @@ fn gen_tokens(line: &String, ln: u32, tokens: &mut Vec<Token>) {
 			'(' => TokenType::LPAREN,
 			')' => TokenType::RPAREN,
 			'=' => TokenType::EQ,
-			_ => TokenType::UNDEFINED, 
+			_ => {
+				// Special token matching for panicking if it found an undefined token
+				assert!(false, "line {}: col {}: Error: undefined char: {}", ln, i, c.to_string());
+				TokenType::UNDEFINED
+			}, 
 		};
-		// Special token matching for panicking if it found an undefined token
-		if tt == TokenType::UNDEFINED {
-			assert!(false, "line {}: col {}: Error: undefined char: {}", ln, i, c.to_string());
-		}
 		// Append the token to the vector of tokens
 		tokens.append(&mut vec![Token {
 			line: ln,

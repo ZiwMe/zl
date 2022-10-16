@@ -8,19 +8,27 @@ fn read_file(path: String) -> String {
 	fs::read_to_string(path).expect("Couldn't read file")
 }
 
+// Function for gnerating padding strings
+fn gen_padding_str(len: usize, ammount: usize) -> String {
+	let mut padd = String::new();
+	for _ in 0..(ammount - len) {
+		padd += &" ".to_string();
+	}
+	padd
+}
+
 // Debug function to nicely print the lexer tokens
 fn print_lex_tokens(tokens: &Vec<lexer::lexer::Token>) {
 	// Loops over all the tokens
 	for t in tokens.iter() {
+		// Generates a string to use as padding after the token string
+		let str_padd = gen_padding_str((t.str).chars().count(), 5);
+		
 		// Generates a string to use as padding after the token type
-		let padding = format!("{:?}", t.tt).chars().count();
-		let mut pad_str: String = "".to_string();
-		// TODO: Find a better way to do this
-		for _ in 0..(10 - padding) {
-			pad_str += &" ".to_string();
-		}
+		let tt_padd = gen_padding_str(format!("{:?}", t.tt).chars().count(), 10);
+
 		// Prints the token in a formated way that is easy to read
-		println!("Token str: {} type: {:?}{} line: {}\t col: {}", t.str, t.tt, pad_str, t.line, t.col);
+		println!("Token str: {}{} type: {:?}{} line: {}\t col: {}", t.str, str_padd, t.tt, tt_padd, t.line, t.col);
 	}
 }
 
