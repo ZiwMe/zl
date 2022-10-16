@@ -45,13 +45,52 @@ fn split_newline(str: String) -> Vec<String> {
 	split
 }
 
+// For storing number data peing lexed
+struct NumberData {
+	num: String,
+	reading_num: bool,
+	dots: u32,
+	col: u32,
+}
+impl Default for NumberData {
+	fn default() -> Self {
+		NumberData { num: String::new(), reading_num: false, dots: 0, col: 0 }
+	}
+}
+impl NumberData {
+	// For starting/continuing a number being lexed
+	fn handle_digit(&mut self, col: u32, c: char) {
+		if !self.reading_num {
+			self.reading_num = true;
+			self.col = col;
+		}
+		self.num += &String::from(c.to_string());
+	}
+	// For handling '.' in float, and adding the number token to the vector of token
+	fn handle_non_digit(&mut self, c: char, ln: u32, tokens: &mut Vec<Token>) -> bool {
+		if c == '.' { 
+			self.dots += 1;
+			self.num += &String::from(".");
+			assert!(self.dots <= 1, "line {}: col {}: Error: Too many punctuations in float, ammount {}",
+					ln, self.col, self.dots);
+			return true;
+		}
+		let tt = if self.dots > 0 { TokenType::FLOAT } else { TokenType::INT };
+		tokens.append(&mut vec![Token {
+			line: ln,
+			col: self.col,
+			str: format!("{}", self.num),
+			tt
+			
+		}]);
+		return false;
+	}
+}
+
 // Generate tokens for a line 
 fn gen_tokens(line: &String, ln: u32, tokens: &mut Vec<Token>) {
 	// Data for keeping track of number data
-	let mut num_str: String = String::new(); // str version of the number
-	let mut reading_num: bool = false; // bool to tell the code if it is currently reading a number
-	let mut dot_count: u32 = 0; // keeping track of the ammount of dots in a float to catch bugs
-	let mut start_col_num = 0; // Keeping track of the start of the number
+	let mut num_data = NumberData{..Default::default()};
 
 	// Enumerate over the characters in the line
 	for (i, c) in line.to_owned().chars().enumerate() {
@@ -61,44 +100,13 @@ fn gen_tokens(line: &String, ln: u32, tokens: &mut Vec<Token>) {
 		}
 		// Check to see if its a number
 		if c.is_digit(10) {
-			// If it is a number, and is not reading a number, aka the start of the number
-			if !reading_num {
-				reading_num = true;
-				start_col_num = i;
-			}
-			// Add the number char to the str of the currnt number
-			num_str += &String::from(c.to_string());
+			num_data.handle_digit(i as u32, c);
 			continue;
 		}
 		// not reading a number char, but is currently reading a line, aka a '.' or the number just stopped
-		if reading_num {
-			// Is the char a dot?
-			if c == '.' {
-				// Increase the dot count 
-				dot_count += 1;
-				num_str += &".".to_string();
-				// panick if there are too many dot's in a float
-				assert!(dot_count <= 1, "line {ln}: col {i}: Error: Too many punctuations in float, ammount {dot_count}");
-				continue;
-			}
-			// What type of number is it
-			let mut tt = TokenType::INT;
-			// Has it 1 or more dots?
-			if dot_count > 0 {
-				// make it a float
-				tt = TokenType::FLOAT;
-			}
-			// Add the number token to the vector of tokens
-			tokens.append(&mut vec![Token {
-				line: ln,
-				col: start_col_num as u32,
-				str: num_str,
-				tt,
-			}]);
-			// Reset values
-			reading_num = false;
-			dot_count = 0;
-			num_str = "".to_string();
+		if num_data.reading_num {
+			if num_data.handle_non_digit(c, ln, tokens) {continue;}
+			else {num_data = NumberData {..Default::default()};}
 		}
 
 		// Figure out the token type for single char tokens
@@ -127,20 +135,7 @@ fn gen_tokens(line: &String, ln: u32, tokens: &mut Vec<Token>) {
 	// For appending the number token to the vector of tokens...
 	// this is to prevent the lexer from not appending a number
 	// that was at the end of a line
-	if reading_num {
-		// What type of number is it
-		let mut tt = TokenType::INT;
-		// Has it 1 or more dots?
-		if dot_count > 0 {
-			// make it a float
-			tt = TokenType::FLOAT;
-		}
-		// Add the number token to the vector of tokens
-		tokens.append(&mut vec![Token {
-			line: ln,
-			col: start_col_num as u32,
-			str: num_str,
-			tt,
-		}]);
+	if num_data.reading_num {
+		num_data.handle_non_digit(' ', ln, tokens);
 	}
 }
