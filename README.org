@@ -6,7 +6,9 @@ Fundamental changes can happen withut warning!
 #+END_CENTER
 
 ** The Core idea
-tokens in statements are seperated by whitespace, with optional scopes for grouping tokens/statements.
+tokens are seperated by whitespace, with optional scopes for grouping tokens/statements.
+
+several tokens build up a statement.
 
 Statements are terminated by a semicolon.
 
@@ -192,4 +194,53 @@ Not
 #+BEGIN_SRC zl
 true ! true
 #+END_SRC
+
+** Datatypes
+
+*** bool
+boolean
+true false
+
+*** s8
+Signed 8 bit integer
+
+*** u8
+Unsigned 8 bit integer
+
+*** s16
+Signed 8 bit integer
+
+*** u16
+Unsigned 8 bit integer
+
+*** s32
+Signed 8 bit integer
+
+*** u32
+Unsigned 8 bit integer
+
+*** s64
+Signed 8 bit integer
+
+*** u64
+Unsigned 8 bit integer
+
+*** f32
+32 bit float
+
+*** f64
+64 bit float
+
+*** string
+An ascii string, could be viewed as an array of u8
+
+*** int
+Another name for s64
+
+*** float
+Another name for f64
+
+*** void
+no type,
+It exists, but you probagbly wont use it much.
 
