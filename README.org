@@ -1,2 +1,195 @@
 * zl
 
+#+BEGIN_CENTER
+This is a project I am making for fun, and is in no way a finnished product.
+Fundamental changes can happen withut warning!
+#+END_CENTER
+
+** The Core idea
+tokens in statements are seperated by whitespace, with optional scopes for grouping tokens/statements.
+
+Statements are terminated by a semicolon.
+
+** Inspiration
+This programming language is inspired by Jai, Odin, and Porth
+
+** Scopes
+Theese are the scopes for the language.
+
+*** ( )
+Used for optional grouping operations like in math.
+Example:
+#+BEGIN_SRC zl
+( 1 + 1 ) - ( 1 + 1 );
+#+END_SRC
+And they are for optional grouping arguments.
+Example:
+#+BEGIN_SRC zl
+function_name ( arg1 arg2 );
+#+END_SRC
+
+*** [ ]
+Used for grouping values into an array,
+the array scope can contain single values,
+or they can contain scopes.
+Example:
+#+BEGIN_SRC zl
+[ 1 2 3 4 ];
+[ [ 1 2 ] [ 3 4 ] ];
+[ ( 1 2 ) ( 3 4 ) ];
+#+END_SRC
+
+*** { }
+Used for grouping statements.
+This is also known as a code block.
+Example:
+#+BEGIN_SRC zl
+{
+    1 + 1;
+	2 + 2;
+};
+#+END_SRC
+
+** Operators
+
+*** Arithmetic
+
+**** +
+Addition
+
+**** -
+Subtraction
+
+**** *
+Multiplication
+
+**** /
+Division
+
+**** %
+Modulus
+
+**** **
+Exponent
+
+*** Assignment
+
+**** : type :
+Constant assignment
+#+BEGIN_SRC zl
+val : int : 1
+#+END_SRC
+Optionaly without the type
+#+BEGIN_SRC zl
+val : : 1
+val :: 1
+#+END_SRC
+
+**** : type =
+Mutable assignment.
+#+BEGIN_SRC zl
+val : int = 1
+#+END_SRC
+Optionaly without the type
+#+BEGIN_SRC zl
+val : = 1
+val := 1
+#+END_SRC
+
+**** =
+Reassignment
+
+**** +=
+Same as
+#+BEGIN_SRC zl
+val1 = val1 + val2;
+#+END_SRC
+
+**** -=
+Same as
+#+BEGIN_SRC zl
+val1 = val1 - val2;
+#+END_SRC
+
+**** *=
+Same as
+#+BEGIN_SRC zl
+val1 = val1 * val2;
+#+END_SRC
+
+**** /=
+Same as
+#+BEGIN_SRC zl
+val1 = val1 / val2;
+#+END_SRC
+
+**** %=
+Same as
+#+BEGIN_SRC zl
+val1 = val1 % val2;
+#+END_SRC
+
+**** **=
+Same as
+#+BEGIN_SRC zl
+val1 = val1 ** val2;
+#+END_SRC
+
+*** Comparison
+
+**** ==
+Equal
+#+BEGIN_SRC zl
+1 == 1
+#+END_SRC
+
+**** !=
+Not equal
+#+BEGIN_SRC zl
+1 != 1
+#+END_SRC
+
+**** <
+less than
+#+BEGIN_SRC zl
+1 < 1
+#+END_SRC
+
+**** >
+more than
+#+BEGIN_SRC zl
+1 > 1
+#+END_SRC
+
+**** <=
+less than or equal to
+#+BEGIN_SRC zl
+1 >= 1
+#+END_SRC
+
+**** >=
+more than or equal to
+#+BEGIN_SRC zl
+1 >= 1
+#+END_SRC
+
+*** Logical
+
+**** &&
+And
+#+BEGIN_SRC zl
+true && true
+#+END_SRC
+
+**** ||
+Or
+#+BEGIN_SRC zl
+true || true
+#+END_SRC
+
+**** !
+Not
+#+BEGIN_SRC zl
+true ! true
+#+END_SRC
+
