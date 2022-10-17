@@ -1,40 +1,41 @@
 * zl
 
 #+BEGIN_CENTER
-This is a project I am making for fun, and is in no way a finnished product.
-Fundamental changes can happen withut warning!
+This is a project I am making for fun, and is in no way a finnished product.  
+Fundamental changes can happen withut warning!  
 #+END_CENTER
 
 ** The Core idea
-tokens are seperated by whitespace, with optional scopes for grouping tokens/statements.
+tokens are seperated by whitespace,  
+with optional scopes for grouping tokens/statements.  
 
-several tokens build up a statement.
+several tokens build up a statement.  
 
-Statements are terminated by a semicolon.
+Statements are terminated by a semicolon.  
 
 ** Inspiration
-This programming language is inspired by Jai, Odin, and Porth
+This programming language is inspired by Jai, Odin, and Porth  
 
 ** Scopes
-Theese are the scopes for the language.
+Theese are the scopes for the language.  
 
 *** ( )
-Used for optional grouping operations like in math.
-Example:
+Used for optional grouping operations like in math.  
+Example:  
 #+BEGIN_SRC zl
 ( 1 + 1 ) - ( 1 + 1 );
 #+END_SRC
-And they are for optional grouping arguments.
-Example:
+And they are for optional grouping arguments.  
+Example:  
 #+BEGIN_SRC zl
 function_name ( arg1 arg2 );
 #+END_SRC
 
 *** [ ]
-Used for grouping values into an array,
-the array scope can contain single values,
-or they can contain scopes.
-Example:
+Used for grouping values into an array,  
+the array scope can contain single values,  
+or they can contain scopes.  
+Example:  
 #+BEGIN_SRC zl
 [ 1 2 3 4 ];
 [ [ 1 2 ] [ 3 4 ] ];
@@ -42,9 +43,9 @@ Example:
 #+END_SRC
 
 *** { }
-Used for grouping statements.
-This is also known as a code block.
-Example:
+Used for grouping statements.  
+This is also known as a code block.  
+Example:  
 #+BEGIN_SRC zl
 {
     1 + 1;
@@ -57,82 +58,85 @@ Example:
 *** Arithmetic
 
 **** +
-Addition
+Addition  
 
 **** -
-Subtraction
+Subtraction  
 
 **** *
-Multiplication
+Multiplication  
 
 **** /
-Division
+Division  
 
 **** %
-Modulus
+Modulus  
 
 **** **
-Exponent
+Exponent  
 
 *** Assignment
 
 **** : type :
-Constant assignment
+Constant assignment  
 #+BEGIN_SRC zl
 val : int : 1
 #+END_SRC
-Optionaly without the type
+Optionaly without the type  
 #+BEGIN_SRC zl
 val : : 1
 val :: 1
 #+END_SRC
 
 **** : type =
-Mutable assignment.
+Mutable assignment.  
 #+BEGIN_SRC zl
 val : int = 1
 #+END_SRC
-Optionaly without the type
+Optionaly without the type  
 #+BEGIN_SRC zl
 val : = 1
 val := 1
 #+END_SRC
 
 **** =
-Reassignment
+Reassignment  
+#+BEGIN_SRC zl
+val = 1
+#+END_SRC
 
 **** +=
-Same as
+Same as  
 #+BEGIN_SRC zl
 val1 = val1 + val2;
 #+END_SRC
 
 **** -=
-Same as
+Same as  
 #+BEGIN_SRC zl
 val1 = val1 - val2;
 #+END_SRC
 
 **** *=
-Same as
+Same as  
 #+BEGIN_SRC zl
 val1 = val1 * val2;
 #+END_SRC
 
 **** /=
-Same as
+Same as  
 #+BEGIN_SRC zl
 val1 = val1 / val2;
 #+END_SRC
 
 **** %=
-Same as
+Same as  
 #+BEGIN_SRC zl
 val1 = val1 % val2;
 #+END_SRC
 
 **** **=
-Same as
+Same as  
 #+BEGIN_SRC zl
 val1 = val1 ** val2;
 #+END_SRC
@@ -140,37 +144,37 @@ val1 = val1 ** val2;
 *** Comparison
 
 **** ==
-Equal
+Equal  
 #+BEGIN_SRC zl
 1 == 1
 #+END_SRC
 
 **** !=
-Not equal
+Not equal  
 #+BEGIN_SRC zl
 1 != 1
 #+END_SRC
 
 **** <
-less than
+less than  
 #+BEGIN_SRC zl
 1 < 1
 #+END_SRC
 
 **** >
-more than
+more than  
 #+BEGIN_SRC zl
 1 > 1
 #+END_SRC
 
 **** <=
-less than or equal to
+less than or equal to  
 #+BEGIN_SRC zl
 1 >= 1
 #+END_SRC
 
 **** >=
-more than or equal to
+more than or equal to  
 #+BEGIN_SRC zl
 1 >= 1
 #+END_SRC
@@ -178,19 +182,19 @@ more than or equal to
 *** Logical
 
 **** &&
-And
+And  
 #+BEGIN_SRC zl
 true && true
 #+END_SRC
 
 **** ||
-Or
+Or  
 #+BEGIN_SRC zl
 true || true
 #+END_SRC
 
 **** !
-Not
+Not  
 #+BEGIN_SRC zl
 true ! true
 #+END_SRC
@@ -198,49 +202,49 @@ true ! true
 ** Datatypes
 
 *** bool
-boolean
-true false
+boolean  
+true false  
 
 *** s8
-Signed 8 bit integer
+Signed 8 bit integer  
 
 *** u8
-Unsigned 8 bit integer
+Unsigned 8 bit integer  
 
 *** s16
-Signed 8 bit integer
+Signed 8 bit integer  
 
 *** u16
-Unsigned 8 bit integer
+Unsigned 8 bit integer  
 
 *** s32
-Signed 8 bit integer
+Signed 8 bit integer  
 
 *** u32
-Unsigned 8 bit integer
+Unsigned 8 bit integer    
 
 *** s64
-Signed 8 bit integer
+Signed 8 bit integer  
 
 *** u64
-Unsigned 8 bit integer
+Unsigned 8 bit integer  
 
 *** f32
-32 bit float
+32 bit float  
 
-*** f64
-64 bit float
+*** f64 
+64 bit float  
 
 *** string
-An ascii string, could be viewed as an array of u8
+An ascii string, could be viewed as an array of u8  
 
 *** int
-Another name for s64
+Another name for s64  
 
 *** float
-Another name for f64
+Another name for f64  
 
 *** void
-no type,
-It exists, but you probagbly wont use it much.
+no type,  
+It exists, but you probably wont use it much.  
 
